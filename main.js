@@ -1,52 +1,30 @@
-const throwMap = new Map([
-  [0, 'rock'],
-  [1, 'scissors'],
-  [2, 'paper'],
-]);
+const choices = ['rock', 'scissors', 'paper'];
 
-function toThrow() {
-  return throwMap.get(getRandomNumber());
-}
+let userChoise = 'paper';
+let computerChoise = choices[Math.floor(Math.random() * choices.length)];
 
-// get 0 ~ 2 integer number
-function getRandomNumber() {
-  return Math.floor(Math.random() * 3);
-}
-
-function decideResult(thrownthing) {
-  const computerThing = toThrow();
-  console.log(`conputer threw ${computerThing}`);
-  switch (thrownthing) {
-    case 0:
-      console.log('you threw rock');
-      if (computerThing === 'rock') {
-        console.log('draw');
-      } else if (computerThing === 'scissors') {
-        console.log('you win');
-      } else {
-        console.log('you lose');
-      }
+const getResult = (userChoise, computerChoise) => {
+  let result = 0;
+  switch (userChoise + computerChoise) {
+    case 'scissorspaper':
+    case 'rockscissors':
+    case 'paperrock':
+      result++;
       break;
-    case 1:
-      console.log('you threw scissors');
-      if (computerThing === 'rock') {
-        console.log('you lose');
-      } else if (computerThing === 'scissors') {
-        console.log('draw');
-      } else {
-        console.log('you win');
-      }
+    case 'scissorsscissors':
+    case 'rockrock':
+    case 'paperpaper':
       break;
-    case 2:
-      console.log('you threw paper');
-      if (computerThing === 'rock') {
-        console.log('you win');
-      } else if (computerThing === 'scissors') {
-        console.log('you lose');
-      } else {
-        console.log('draw');
-      }
+    case 'scissorsrock':
+    case 'rockpaper':
+    case 'paperscissors':
+      result--;
+      break;
   }
-}
+  return result;
+};
 
-decideResult(1);
+let result = getResult(userChoise, computerChoise);
+if (result > 0) console.log('you win');
+else if (result == 0) console.log('draw');
+else console.log('you lose');
